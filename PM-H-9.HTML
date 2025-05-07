@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karl Marx & Friedrich Engels für Kinder</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F1DCC9;
+      margin: 0;
+      padding: 0;
+      color: #42313A;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    header {
+      background-color: #6C2D2C;
+      color: #F1DCC9;
+      padding: 30px;
+      text-align: center;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    nav {
+      background-color: #9F4636;
+      padding: 10px;
+      text-align: center;
+      border-bottom: 2px solid #6C2D2C;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    nav a, nav button {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #F1DCC9;
+      font-weight: bold;
+      font-size: 1.1em;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .content {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: #fff;
+      border: 1px solid #9F4636;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(108, 45, 44, 0.2);
+      transition: background-color 0.5s, border-color 0.5s;
+    }
+    .section h2 {
+      color: #6C2D2C;
+      transition: color 0.5s;
+    }
+    .section img {
+      display: block;
+      margin: 0 auto 15px auto;
+      border-radius: 10px;
+      max-width: 100px;
+      height: auto;
+    }
+    button {
+      background-color: #9F4636;
+      color: #F1DCC9;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 5px 10px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #6C2D2C;
+      color: #F1DCC9;
+      margin-top: 40px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    /* Pfeile und Anzeigefunktion */
+    .more-text {
+      display: none;
+    }
+    .show-more {
+      font-size: 16px;
+      color: #F6A623;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .show-more:hover {
+      color: #D95D3E;
+    }
+    /* DARK MODE STYLES */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #f0e6d2;
+    }
+    body.dark-mode .section {
+      background-color: #2c2c2c;
+      border-color: #555;
+    }
+    body.dark-mode .section h2 {
+      color: #f6a623;
+    }
+    body.dark-mode header, 
+    body.dark-mode footer, 
+    body.dark-mode nav {
+      background-color: #5a2a2a;
+      color: #f0e6d2;
+    }
+    body.dark-mode nav a, 
+    body.dark-mode nav button {
+      color: #f0e6d2;
+    }
+    body.dark-mode .show-more {
+      color: #ffd27f;
+    }
+    body.dark-mode .show-more:hover {
+      color: #ffa94d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Karl Marx & Friedrich Engels</h1>
+    <p>Kindgerecht erklärt: Zwei wichtige Denker und ihre Ideen</p>
+  </header>
+  
+  <nav>
+    <a href="#marx">Karl Marx</a>
+    <a href="#engels">Friedrich Engels</a>
+    <a href="#werke">Wichtige Werke</a>
+    <button onclick="toggleDarkMode()">🌙 / ☀️</button>
+  </nav>
+  
+  <div class="content">
+    <div class="section" id="marx">
+      <h2>Karl Marx</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/250px-Karl_Marx_001.jpg" alt="Karl Marx">
+      <p>Karl Marx war ein deutscher Philosoph, Ökonom und politischer Theoretiker. Er wurde am 5. Mai 1818 in Trier geboren. 
+        <span class="show-more" onclick="toggleText('marx')">Mehr lesen</span>
+      </p>
+      <div id="marx-full-text" class="more-text">
+        <p>Mehr Text zu Karl Marx</p>
+      </div>
+    </div>
+
+    <div class="section" id="engels">
+      <h2>Friedrich Engels</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Friedrich_Engels_portrait_%28cropped%29.jpg/250px-Friedrich_Engels_portrait_%28cropped%29.jpg" alt="Friedrich Engels">
+      <p>Friedrich Engels war ein deutscher Unternehmer, Philosoph und Mitautor wichtiger Werke mit Karl Marx. 
+        <span class="show-more" onclick="toggleText('engels')">Mehr lesen</span>
+      </p>
+      <div id="engels-full-text" class="more-text">
+        <p>Mehr Text zu Friedrich Engels</p>
+      </div>
+    </div>
+
+    <div class="section" id="werke">
+      <h2>Wichtige Werke</h2>
+      <p>
+        Das Kommunistische Manifest (1848) <br>
+        Das Kapital (1867–1894) <br>
+        Die Lage der arbeitenden Klasse in England 
+        <span class="show-more" onclick="toggleText('werke')">Mehr lesen</span>
+      </p>
+      <div id="werke-full-text" class="more-text">
+        <p>Mehr Text zu Wichtige Werke</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Kinder lernen Geschichte</p>
+  </footer>
+
+  <script>
+    function toggleText(section) {
+      var fullText = document.getElementById(section + '-full-text');
+      var showMore = document.querySelector('#' + section + ' .show-more');
+      
+      if (fullText.style.display === "none" || fullText.style.display === "") {
+        fullText.style.display = "block";
+        showMore.textContent = "Weniger lesen";
+      } else {
+        fullText.style.display = "none";
+        showMore.textContent = "Mehr lesen";
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>

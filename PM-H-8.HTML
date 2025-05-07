@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl Marx & Friedrich Engels für Kinder</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F1DCC9;
+            margin: 0;
+            padding: 0;
+            color: #42313A;
+        }
+        header {
+            background-color: #42313A;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        nav {
+            background-color: #6C2D2C;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #9F4636;
+        }
+        nav a, nav button {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #F1DCC9;
+            font-weight: bold;
+            font-size: 1.1em;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .section {
+            background-color: white;
+            border: 1px solid #9F4636;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .section img {
+            display: block;
+            margin: 0 auto 15px auto;
+            border-radius: 10px;
+            max-width: 100px;
+            height: auto;
+        }
+        .section h2 {
+            color: #9F4636;
+        }
+        .more-info {
+            display: none;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #9F4636;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #42313A;
+            color: white;
+            margin-top: 40px;
+        }
+        #easter-egg {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #9F4636;
+            font-size: 1.2em;
+        }
+        #quiz-section {
+            display: none;
+            background-color: #FFF8E1;
+            border: 1px solid #FFD54F;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        #timer {
+            font-weight: bold;
+            color: #9F4636;
+        }
+        #score {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        let questions = [
+            {
+                text: "Wer hat das Kommunistische Manifest mitverfasst?",
+                options: ["Karl Marx", "Friedrich Engels", "Albert Einstein", "Ludwig van Beethoven"],
+                correct: [0, 1]
+            },
+            {
+                text: "Woher kam Friedrich Engels?",
+                options: ["Berlin", "Barmen", "London", "Paris"],
+                correct: [1]
+            },
+            {
+                text: "Welches Buch schrieb Karl Marx?",
+                options: ["Das Kapital", "Der Ursprung der Familie", "Die Lage der arbeitenden Klasse", "Der Reichtum der Nationen"],
+                correct: [0]
+            }
+        ];
+
+        function toggleInfo(id) {
+            var section = document.getElementById(id);
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Shift' && e.getModifierState('Meta')) {
+                document.getElementById('easter-egg').style.display = 'block';
+            }
+        });
+
+        function showQuiz() {
+            document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
+            document.getElementById('quiz-section').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+            if (!window.timerRunning) {
+                startTimer();
+                window.timerRunning = true;
+            }
+        }
+
+        function showAll() {
+            document.querySelectorAll('.section').forEach(el => el.style.display = 'block');
+            document.getElementById('quiz-section').style.display = 'none';
+        }
+
+        let timerInterval;
+        let timeLeft = 30;
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.textContent = 'Zeit: ' + timeLeft + 's';
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                if (document.getElementById('quiz-section').style.display !== 'none') {
+                    timerDisplay.textContent = 'Zeit: ' + timeLeft + 's';
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Zeit ist abgelaufen!');
+                    window.timerRunning = false;
+                    showAll();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            timeLeft = 120;
+            const question = questions[currentQuestion];
+            const quiz = document.getElementById('quiz-section');
+            quiz.innerHTML = `<h2>Rätselzeit!</h2><div id="timer"></div><p>${question.text}</p>`;
+
+            question.options.forEach((option, index) => {
+                quiz.innerHTML += `<label><input type="checkbox" value="${index}"> ${option}</label><br>`;
+            });
+
+            quiz.innerHTML += `<button onclick="checkAnswer()">Weiter</button><button onclick="showAll()">Zurück</button>`;
+            quiz.innerHTML += `<div id="score">Punkte: ${score}</div>`;
+        }
+
+        function checkAnswer() {
+            const selected = Array.from(document.querySelectorAll('#quiz-section input:checked')).map(el => parseInt(el.value));
+            const correct = questions[currentQuestion].correct;
+            if (arraysEqual(selected.sort(), correct.sort())) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-section').innerHTML = `<h2>Fertig!</h2><p>Du hast ${score} von ${questions.length} Punkten erreicht.</p><button onclick="showAll()">Zurück</button>`;
+                clearInterval(timerInterval);
+                window.timerRunning = false;
+            }
+        }
+
+        function arraysEqual(a, b) {
+            return a.length === b.length && a.every((val, index) => val === b[index]);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Karl Marx & Friedrich Engels</h1>
+        <p>Kindgerecht erklärt: Zwei wichtige Denker und ihre Ideen</p>
+    </header>
+    <nav>
+        <a href="#marx">Karl Marx</a>
+        <a href="#engels">Friedrich Engels</a>
+        <a href="#werke">Wichtige Werke</a>
+        <button onclick="showQuiz()">Rätsel starten</button>
+    </nav>
+    <div class="content">
+        <div class="section" id="marx">
+            <h2>Karl Marx</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/250px-Karl_Marx_001.jpg" alt="Karl Marx">
+            <p>Karl Marx war ein deutscher Philosoph, Ökonom und politischer Theoretiker. Er wurde am 5. Mai 1818 in Trier geboren.</p>
+        </div>
+        <div class="section" id="engels">
+            <h2>Friedrich Engels</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Friedrich_Engels_portrait_%28cropped%29.jpg/250px-Friedrich_Engels_portrait_%28cropped%29.jpg" alt="Friedrich Engels">
+            <p>Friedrich Engels war ein deutscher Unternehmer, Philosoph und Mitautor wichtiger Werke mit Karl Marx. Er wurde am 28. November 1820 in Barmen geboren.</p>
+        </div>
+        <div class="section" id="werke">
+            <h2>Wichtige Werke</h2>
+            <ul>
+                <li>Das Kommunistische Manifest (1848)</li>
+                <li>Das Kapital (1867–1894)</li>
+                <li>Die Lage der arbeitenden Klasse in England</li>
+            </ul>
+        </div>
+        <div id="quiz-section"></div>
+        <div id="easter-egg">
+            🥚 Geheimnis gelüftet: Die Antwort auf alles ist <strong>42</strong>.
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Kinder lernen Geschichte</p>
+    </footer>
+</body>
+</html>
